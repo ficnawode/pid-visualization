@@ -22,36 +22,12 @@ void p_mass2() {
 
   // declare fields to be accessed and get their id
   AnalysisTree::Configuration *treeConfig = treeIn->GetConfiguration();
-  // SIMULATED
-  const int sp = treeConfig->GetBranchConfig("SimParticles").GetFieldId("p");
-  const int sx = treeConfig->GetBranchConfig("SimParticles").GetFieldId("x");
-  const int sy = treeConfig->GetBranchConfig("SimParticles").GetFieldId("y");
-  const int sz = treeConfig->GetBranchConfig("SimParticles").GetFieldId("z");
-  const int smother_id =
-      treeConfig->GetBranchConfig("SimParticles").GetFieldId("mother_id");
 
   // STS+MVD
   const int rp = treeConfig->GetBranchConfig("VtxTracks").GetFieldId("p");
-  const int rpT = treeConfig->GetBranchConfig("VtxTracks").GetFieldId("pT");
-  const int rEta = treeConfig->GetBranchConfig("VtxTracks").GetFieldId("eta");
 
   // TOF
   const int mass2 = treeConfig->GetBranchConfig("TofHits").GetFieldId("mass2");
-  const int qp_tof =
-      treeConfig->GetBranchConfig("TofHits").GetFieldId("qp_tof");
-  const int x_tof = treeConfig->GetBranchConfig("TofHits").GetFieldId("x");
-  const int y_tof = treeConfig->GetBranchConfig("TofHits").GetFieldId("y");
-
-  // TRD
-  const int trd_p = treeConfig->GetBranchConfig("TrdTracks").GetFieldId("p");
-  const int trd_eloss0 =
-      treeConfig->GetBranchConfig("TrdTracks").GetFieldId("energy_loss_0");
-  const int trd_eloss1 =
-      treeConfig->GetBranchConfig("TrdTracks").GetFieldId("energy_loss_1");
-  const int trd_eloss2 =
-      treeConfig->GetBranchConfig("TrdTracks").GetFieldId("energy_loss_2");
-  const int trd_eloss3 =
-      treeConfig->GetBranchConfig("TrdTracks").GetFieldId("energy_loss_3");
 
   // declare histograms
   TH2F p_mass2("p_mass2", "Matching STS p TOF mass2 ;p ;mass^2", 400, -2, 20,

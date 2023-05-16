@@ -7,6 +7,8 @@ void hc_qp_mass2() {
   const int NEvents = treeIn->GetEntries();
 
   // declare branches and hook them up to the session
+  auto *sim_tracks = new AnalysisTree::Particles();
+  treeIn->SetBranchAddress("SimParticles.", &sim_tracks);
   auto *tof_hits = new AnalysisTree::HitDetector();
   treeIn->SetBranchAddress("TofHits.", &tof_hits);
   auto *tof_sim_matching = new AnalysisTree::Matching();
