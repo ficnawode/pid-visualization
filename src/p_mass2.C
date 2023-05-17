@@ -63,7 +63,12 @@ void p_mass2() {
       const float vtx_p = vtx_tracks->GetChannel(tof_id).GetField<float>(rp);
       p_mass2.Fill(vtx_p, tof_mass2);
 
-      const int sim_id = tof_sim_matching->GetMatch(tof_hit.GetId());
+      const int sim_id_tof = tof_sim_matching->GetMatch(tof_hit.GetId());
+      const int sim_id_vtx = vtx_sim_matching->GetMatch(tof_hit.GetId());
+      // TODO!!!!
+      if (sim_id_tof != sim_id_vtx)
+        continue;
+
       if (sim_id < 0)
         continue;
 

@@ -1,0 +1,11 @@
+   ------------------------------------------------------------------
+  | Welcome to ROOT 6.29/01                        https://root.cern |
+  | (c) 1995-2022, The ROOT Team; conception: R. Brun, F. Rademakers |
+  | Built for linuxx8664gcc on May 13 2023, 13:51:00                 |
+  | From heads/master@v6-29-01-1332-gc8c0ea7c59                      |
+  | With c++ (Debian 8.3.0-6) 8.3.0                                  |
+  | Try '.help'/'.?', '.demo', '.license', '.credits', '.quit'/'.q'  |
+   ------------------------------------------------------------------
+
+
+Processing get_atree_config.C...

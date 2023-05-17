@@ -1,9 +1,9 @@
 
-void hc_qp_mass2() {
+void hc_qp_mass2_cut() {
   AnalysisTree::Chain *treeIn =
       new AnalysisTree::Chain(std::vector<std::string>({"fileslist.txt"}),
                               std::vector<std::string>({"rTree"}));
-  TFile *fileOut = TFile::Open("out/hc_qp_mass2.root", "recreate");
+  TFile *fileOut = TFile::Open("out/hc_qp_mass2_cut.root", "recreate");
   const int NEvents = treeIn->GetEntries();
 
   // declare branches and hook them up to the session
@@ -28,27 +28,27 @@ void hc_qp_mass2() {
   // declare histograms
   TH2F hc_qp_mass2("hc_qp_mass2",
                    "correlation qp_tof mass2; sign(q)*p (GeV/c);mass^2 (GeV)^2",
-                   700, -12, 12, 700, -2, 5);
+                   700, -12, 12, 700, -2, 3);
   TH2F hc_qp_mass2_protons("hc_qp_mass2 protons sim pid",
                            "correlation qp_tof mass2 protons sim pid; "
                            "sign(q)*p (GeV/c);mass^2 (GeV)^2",
-                           700, -12, 12, 700, -2, 5);
+                           700, 0, 12, 700, -1.8, 3.2);
   TH2F hc_qp_mass2_pion_plus(
       "hc_qp_mass2 pi+ sim pid",
       "correlation qp_tof mass2 pi + sim pid; sign(q)*p (GeV/c);mass^2 (GeV)^2",
-      700, -12, 12, 700, -2, 5);
+      700, 0, 10, 700, -1, 1);
   TH2F hc_qp_mass2_pion_minus(
       "hc_qp_mass2 pi- sim pid",
       "correlation qp_tof mass2 pi- sim pid; sign(q)*p (GeV/c);mass^2 (GeV)^2",
-      700, -12, 12, 700, -2, 5);
+      700, -10, 0, 700, -1, 1);
   TH2F hc_qp_mass2_kaon_plus(
       "hc_qp_mass2 K+ sim pid",
       "correlation qp_tof mass2 K+ sim pid; sign(q)*p (GeV/c);mass^2 (GeV)^2",
-      700, -12, 12, 700, -2, 5);
+      700, 0, 10, 700, -0.8, 1);
   TH2F hc_qp_mass2_kaon_minus(
       "hc_qp_mass2 K- sim pid",
       "correlation qp_tof mass2 K- sim pid; sign(q)*p (GeV/c);mass^2 (GeV)^2",
-      700, -12, 12, 700, -2, 5);
+      700, -10, 0, 700, -0.8, 1);
   TH2F hc_qp_mass2_others("hc_qp_mass2 others sim pid",
                           "correlation qp_tof mass2 other particles sim pid; "
                           "sign(q)*p (GeV/c);mass^2 (GeV)^2",
@@ -78,19 +78,45 @@ void hc_qp_mass2() {
         continue;
 
       switch (tof_pdg) {
-      case 2212:
+      case 2212: // protons
+        if (tof_qp_tof < 2 && tof_mass2 < 0.6)
+          continue;
+        if (tof_qp_tof < 4 && tof_mass2 < 0.4)
+          continue;
+        if (tof_qp_tof < 6 && tof_mass2 < 0.2)
+          continue;
+        if (tof_qp_tof < 4 && tof_mass2 > 1.4)
+          continue;
+        if (tof_qp_tof < 6 && tof_mass2 > 1.6)
+          continue;
+        if (tof_qp_tof < 8 && tof_mass2 > 2.2)
+          continue;
         hc_qp_mass2_protons.Fill(tof_qp_tof, tof_mass2);
         break;
       case 321:
+        if (tof_qp_tof < 2 && tof_mass2 < 0.14)
+          continue;
         hc_qp_mass2_kaon_plus.Fill(tof_qp_tof, tof_mass2);
         break;
       case -321:
         hc_qp_mass2_kaon_minus.Fill(tof_qp_tof, tof_mass2);
         break;
       case 211:
+        if (tof_qp_tof < 5 && tof_mass2 > 0.4)
+          continue;
+        if (tof_qp_tof < 3 && tof_mass2 > 0.2)
+          continue;
+        if (tof_qp_tof < 1 && tof_mass2 > 0.1)
+          continue;
         hc_qp_mass2_pion_plus.Fill(tof_qp_tof, tof_mass2);
         break;
       case -211:
+        if (tof_qp_tof > -5 && tof_mass2 > 0.4)
+          continue;
+        if (tof_qp_tof > -3 && tof_mass2 > 0.2)
+          continue;
+        if (tof_qp_tof > -1 && tof_mass2 > 0.1)
+          continue;
         hc_qp_mass2_pion_minus.Fill(tof_qp_tof, tof_mass2);
         break;
       default:
