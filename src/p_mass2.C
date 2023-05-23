@@ -74,7 +74,7 @@ void p_mass2() {
 
       int particle_id = sim_tracks->GetChannel(sim_id).GetPid();
       switch (particle_id) {
-      case 2212:
+      case 2212://protons
         p_mass2_protons.Fill(vtx_p, tof_mass2);
         break;
       case 321:
